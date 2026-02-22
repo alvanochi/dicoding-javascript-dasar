@@ -5,18 +5,52 @@ function generateUniqueId() {
 
 
 // TODO: buatlah variabel yang menampung data orders
-let orders;
+let orders = [];
 
 // TODO: selesaikan fungsi addOrder
-function addOrder(customerName, items) {}
+function addOrder(customerName, items) {
+  // Hitung total harga dari semua item yang dipesan
+  const totalPrice = items.reduce((sum, item) => sum + item.price, 0);
+
+  // Buat objek pesanan baru
+  const newOrder = {
+    id: generateUniqueId(),
+    customerName,
+    items,
+    totalPrice,
+    status: 'Menunggu',
+  };
+
+  // Tambahkan pesanan ke dalam array orders
+  orders.push(newOrder);
+}
 
 // TODO: selesaikan fungsi updateOrderStatus
-function updateOrderStatus(orderId, status) {}
+function updateOrderStatus(orderId, status) {
+  // Cari pesanan berdasarkan orderId
+  const order = orders.find((o) => o.id === orderId);
+
+  // Jika pesanan ditemukan, perbarui statusnya
+  if (order) {
+    order.status = status;
+  }
+}
 
 // TODO: selesaikan fungsi calculateTotalRevenue dari order yang berstatus Selesai
-function calculateTotalRevenue() {}
+function calculateTotalRevenue() {
+  // Hitung total revenue dari pesanan yang berstatus 'Selesai'
+  return orders
+    .filter((order) => order.status === 'Selesai')
+    .reduce((sum, order) => sum + order.totalPrice, 0);
+}
 
 // TODO: selesaikan fungsi deleteOrder
-function deleteOrder(id) {}
+function deleteOrder(id) {
+  // Cari index pesanan berdasarkan id lalu hapus dari array
+  const index = orders.findIndex((order) => order.id === id);
+  if (index !== -1) {
+    orders.splice(index, 1);
+  }
+}
 
 export { orders, addOrder, updateOrderStatus, calculateTotalRevenue, deleteOrder };
